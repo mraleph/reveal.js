@@ -185,24 +185,31 @@ section.has-light-background, section.has-light-background h1, section.has-light
 .reveal pre {
   display: block;
   position: relative;
-  width: 90%;
+  width: 110%;
   margin: 20px auto;
   text-align: left;
-  font-size: 0.55em;
+  font-size: 1em;
   font-family: monospace;
   line-height: 1.2em;
-  word-wrap: break-word;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); }
+  word-wrap: break-word; }
+
+code.smaller {
+  font-size: 0.8em !important;
+  line-height: 1.2em; }
 
 .reveal code {
   font-family: monospace;
-  text-transform: none; }
+  text-transform: none;
+  font-size: .9em; }
+
+.reveal pre code {
+  font-size: 1em; }
 
 .reveal pre code {
   display: block;
   padding: 5px;
   overflow: auto;
-  max-height: 400px;
+  max-height: 450px;
   word-wrap: normal; }
 
 .reveal table {
@@ -257,12 +264,14 @@ section.has-light-background, section.has-light-background h1, section.has-light
 .reveal a {
   color: #13DAEC;
   text-decoration: none;
-  transition: color .15s ease; }
+  transition: color .15s ease;
+  border-bottom: 1px dashed #13DAEC; }
 
 .reveal a:hover {
   color: #71e9f4;
   text-shadow: none;
-  border: none; }
+  border: none;
+  border-bottom: 1px dashed #71e9f4; }
 
 .reveal .roll span:after {
   color: #fff;

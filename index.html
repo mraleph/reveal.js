@@ -1,40 +1,589 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+        <title>reveal.js</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+        <link rel="stylesheet" href="dist/reset.css">
+        <link rel="stylesheet" href="dist/reveal.css">
+        <link rel="stylesheet" href="dist/theme/serif.css" id="theme">
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+        <!-- Theme used for syntax highlighted code -->
+        <link rel="stylesheet" href="plugin/highlight/mono-blue.css" id="highlight-theme">
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section><h1>10 years of Dart</h1><code>by Vyacheslav Egorov</code></section>
+                <section>
+                    <div style="float: left; background-color: rgba(255, 225, 0, 0.7); border-radius: .5em; padding: 5px;">2011</div>
+                    <div style="max-width: 80%; text-align: justify; margin-left: auto; margin-right: auto; font-size: 0.9em; line-height: 1.5em;">&laquo;Dart targets a wide range of development scenarios: from a one-person project without much structure to a large-scale project needing formal types in the code to state programmer intent. <mark>To support this wide range of projects, Dart has optional types; this means you can start coding without types and add them later as needed.</mark> We believe Dart will be great for writing large web applications.&raquo;
+                    <div style="text-align: right; font-size: 0.8em;"><a href="https://blog.chromium.org/2011/10/dart-language-for-structured.html">&mdash; Dart: A language for structured web programming</a></div></div>
+                </section>
+                <section>
+                    <pre><code data-trim data-noescape class="dart">
+                        // In Dart 1 it was okay to store a Cat
+                        // in a variable typed as Dog.
+                        Dog d = new Cat();
+                        d.bark();
+                        // dartanalyzer would issue a warning
+                        // but it would run just fine.
+                    </code></pre>
+                </section>
+                <section>
+                    <div style="float: left; background-color: rgba(255, 225, 0, 0.7); border-radius: .5em; padding: 5px;">2018</div>
+                    <div style="max-width: 80%; text-align: justify; margin-left: auto; margin-right: auto; font-size: 0.9em; line-height: 1.5em;">&laquo;The Dart language is type safe: <mark>it uses a combination of static type checking and runtime checks to ensure that a variable’s value always matches the variable’s static type</mark>, sometimes referred to as sound typing. Although types are mandatory, type annotations are optional because of type inference.&raquo;
+                    <div style="text-align: right; font-size: 0.8em;"><a href="https://dart.dev/guides/language/type-system">&mdash; The Dart type system</a></div></div>
+                </section>
+                <section>
+                    <pre><code data-trim data-noescape class="dart">
+                        // No longer runs in Dart 2
+                        Dog d = new Cat();
+                        d.bark();
+                    </code></pre>
+                </section>
+                <section>
+                    <div style="float: left; background-color: rgba(255, 225, 0, 0.7); border-radius: .5em; padding: 5px;">2020</div>
+                    <div style="max-width: 80%; text-align: justify; margin-left: auto; margin-right: auto; font-size: 0.9em; line-height: 1.5em;">&laquo;Sound null safety is coming to the Dart language! <mark>When you opt into null safety, types in your code are non-nullable by default, meaning that values can’t be null unless you say they can be.</mark> With null safety, your runtime null-dereference errors turn into edit-time analysis errors.&raquo;
+                    <div style="text-align: right; font-size: 0.8em;"><a href="https://dart.dev/null-safety">&mdash; Sound null safety</a></div></div>
+                </section>
+                <section>
+                    <pre><code data-trim data-noescape class="dart">
+List&lt;Dog&gt;? dogs = ...;
+dogs.add(Dog());  // compile time error
+if (dogs != null) {
+    dogs.add(null);  // compile time error
+    dogs.add(Dog()); // ok
+}
+                    </code></pre>
+                </section>
+                <section>
+                    <pre class="scheme"><code data-trim data-noescape class="console">
+                                     dynamic                static
+                        ──────────────────────────── ──────────
+                        2011     2013     2015         2018     2020
+                        ──────────────────────────────────────
+                        0.x       1.0  │               2.0      2.12
+                     vm ───────JIT───── ──────────AOT───────────
+                    web ─────────────────AOT──────────────────────
+                                    Flutter
+                    </code></pre>
+                </section>
+                <section>
+                    <table>
+                        <thead>
+                            <tr><td></td><td>Development</td><td>Production</td></tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Native</td><td>JIT</td><td>AOT<sup>&dagger;</sup> (closed world)</td>
+                        </tr>
+                        <tr>
+                            <td>Web</td><td>AOT (modular)</td><td>AOT (closed world)</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: .6em; text-align: right; margin-top: 5em;"><sup>&dagger;</sup> Dart SDK still runs some of its own tools using JIT</p>
+                </section>
+                <section>
+                    <h1>VM's journey</h1>
+                    <h3><em>focus on compilation pipeline</em></h3>
+                </section>
+                <section>
+                    <h1>JITs are a solved problem</h1>
+                </section>
+                <section>
+                    <pre class="scheme"><code data-trim data-noescape class="console">
+                                /* How to make a JIT */
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+                        ╔══════════╗               ┌──────────┐
+                        ║ Compiler ║ ▶ generates ▶ │   Code   │
+                        ╚══════════╝               └──────────┘
+                             ▲                          │
+                             ╰──────────────────────────╯
+                                 execution feedback
+                    </code></pre>
+               </section>
+               <section style="text-align: left; font-size: 1.3em;">
+                <h3 style="text-decoration: underline;">Technicalities:</h3>
+                <p>&mdash; fast interpreter</p>
+                <p>&mdash; multiple compiler tiers</p>
+                <p>&mdash; minimize oscilations between tiers</p>
+                <p>&mdash; widen the fast path</p>
+               </section>
+               <section style="text-align: left; font-size: 1.3em;">
+                <h3>Dart's <mark>artisanal</mark> JIT</h3>
+                <p>the whole pipeline from front-end to platform specific
+                assembler built by hand, no external dependencies. Which forced
+                us to choose between generic and specialized solutions, usually
+                in favor of specialized.</p>
+               </section>
+               <section style="text-align: left; font-size: 1.3em;">
+                <h3>Dart's artisanal JIT</h3>
+                <p>&mdash; generate unoptimized code;</p>
+                <p>&mdash; collect type feedback through inline caches;</p>
+                <p>&mdash; generate optimized code using type feedback;</p>
+                <p>&mdash; rinse and repeat.</p>
+               </section>
+               <section>
+                 <pre class="scheme"><code data-trim data-noescape class="console">
+                             <span class="attn">// call-site specific cache</span>
+                       ─── <span class="">ICData { ... }</span>
+                      ╱
+                  dog.bark();
+                      ╲      <span class="attn">// generic dispatch stub</span>
+                       ─── dispatch(icData, receiver, ...) { ... }
+                 </code></pre>
+             </section>
+             <section style="text-align: left; font-size: 1.3em;">
+                <h3>Inline Caches</h3>
+                <p>&mdash; absolutely fundamental classical piece;</p>
+                <p>&mdash; not limited to method invocation;</p>
+                <p>&mdash; you can <em>synthesize</em> invocation targets.</p>
+                <p>&mdash; not limited to simply caching receiver's class;</p>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="console">
+                      ─── {               }
+                     ╱
+         var f = dog.bark; <em>// method tear-off</em>
+                </code></pre>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="console">
+                      ─── { Dog: ???      }
+                     ╱
+         var f = dog.bark; <em>// method tear-off</em>
+                </code></pre>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="console">
+                      ─── { Dog: get:bark }
+                     ╱                └─ <mark>synthetic</mark>
+         var f = dog.bark; <em>// method tear-off</em>
+                </code></pre>
+            </section>
+            <section>
+                <h2>Shifting to AOT</h2>
+            </section>
+            <section style="text-align: left;">
+                <h2>JIT &rArr; AOT</h2>
+                <ol>
+                  <li>ensure code is relocatable;</li>
+                  <li>disable speculations;</li>
+                  <li>compile all potentially reachable code;</li>
+                  <li>serialize heap</li>
+                  <li>done</li>
+                </ol>
+            </section>
+            <section style="text-align: left;">
+                <h2>ensure code is relocatable</h2>
+                <p>generated code already referred to most constants through
+                <mark>object pool</mark>, which made it almost relocatable.</p>
+            </section>
+            <section>
+                <pre class="scheme">
+    instructions               pool
+┌─────────────────────┐    ┌─┬─┬─┬─┬─┬─┬─
+│ object_pool_ ─────────▶│ │ │ │ │ ││
+├─────────────────────┤    └─┴─┴─┴─┴─┴┴─
+│ ...                 │               │
+│ ldr r4, (pp, 0x14)  │               └─▶ object
+│ ...                 │                   in the heap
+└─────────────────────┘
+                </pre>
+            </section>
+            <section style="text-align: left;">
+                <h2>ensure code is relocatable</h2>
+                <p>had to shift <code>object_pool_</code> away from <code>Instructions</code> object
+                into <code>Code</code> object and alter calling conventions.</p>
+            </section>
+            <section style="text-align: left;">
+                <h2>serialize heap</h2>
+                <p><mark>Snapshots</mark> &mdash; serialized form for object
+                graphs, used for faster startup or exchanging data between
+                <em>isolates</em>. Just needed to teach it carry executable code.</p>
+            </section>
+            <section style="text-align: left;">
+                <h2>disable speculations</h2>
+                <p>Generated code was optimized <em>mostly</em> locally with
+                some minimal CHA. Can still employ <em>inline caching</em>,
+                but can not specialize whole methods in runtime. Can inline
+                <em>fast-paths</em> for important operations (e.g. arithmetic)</p>
+            </section>
+            <section>
+                <pre class="scheme">
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+ code (rx)       pool (rw)
+                 ┌───┐
+     ──────────▶│ ────▶ ICData
+    ╱            ├───┤⬉
+dog.woof();      │   │ can patch these
+    ╲            ├───┤⬋
+     ──────────▶│ ────▶ DispatchStub
+                 ├───┤
+
+
+                </pre>
+            </section>
+            <section style="text-align: left;">
+                <h2>Dart 1 AOT</h2>
+                <ol>
+                  <li>generally slower than JIT;</li>
+                  <li>large code size;</li>
+                  <li>good enough for some uses.</li>
+                </ol>
+            </section>
+            <section>
+                <h1>Dart 2 <br/> <mark>static typing</mark></h1>
+            </section>
+            <section>
+                <h2>Types you <mark>can trust</mark></h2>
+                <h3>but also sometimes must check</h3>
+            </section>
+            <section style="text-align: left;">
+                <h3>Trusting types</h3>
+                <p>&mdash; propagating types globally (TFA)</p>
+                <p>&mdash; using global dispatch table for calls</p>
+            </section>
+            <section style="text-align: left;">
+                <h3>type flow analysis (TFA)</h3>
+                <p>global context sensitive analysis to produce more accurate
+                type information than what is available in static type
+                annotations, which only give us <em>nullable interface types</em>. Can
+                also propagate constant values. Results are used for specialization
+                and tree-shaking.</p>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="dart">
+groom(Animal a) { }
+
+main() {
+  groom(Dog());
+}
+                </code></pre>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="dart">
+groom(Animal a) { }
+               /* TFA: a is non-nullable Dog */
+main() {
+  groom(Dog());
+}
+                </code></pre>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="dart">
+f(int anInt, double aDouble) {
+}
+// anInt and aDouble require boxing:
+//   - in Dart 1 you can't trust their
+//     type at all;
+//   - in Dart 2 you can but they
+//     both can be null.
+//
+                </code></pre>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="dart">
+f(int anInt, double aDouble) {
+}
+// With TFA however we often can infer that
+// int and double typed parameters and fields
+// are never null, allowing us to use unboxed
+// primitive representation for them.
+//            (intern project from 2019-2020)
+                </code></pre>
+            </section>
+            <section style="text-align: left;">
+                <h3>type flow analysis (TFA)</h3>
+                <p>TFA devirtualizes a lot of calls, compared to Dart 1 AOT.
+                This highlights ineffeciency of our calling conventions for
+                <em>static calls</em>: we go virtually through <code>Code</code>
+                object, but these calls should be relative.</p>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="x86asm">
+; load target Code (needed for pool pointer)
+mov CODE_REG, [PP + ...]
+; call its entry point
+call [CODE_REG + Code_entry_point_offset]
+
+; callee then will do in prologue to load the pool
+push PP
+mov PP, [CODE_REG + Code_pool_offset]
+                </code></pre>
+            </section>
+            <section style="text-align: left;">
+                <h3>bare instructions</h3>
+                <p>Diverge AOT and JIT representations of machine code to make
+                it callable without going through <code>Code</code> object.
+                Achieved by switching AOT to use a single global object pool.
+                Allows static calls to become relative.</p>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="x86asm">
+call #relative-offset-to-target
+
+; callee does not have to do anything with PP
+                </code></pre>
+            </section>
+            <section style="text-align: left;">
+                <h3>global dispatch table (GDT)</h3>
+                <p>Instead of <em>switchable calls</em> use large table indexed by
+                a combination of receiver class id and
+                selector id. Classical idea described in literature as
+                <em>row displacement dispatch tables</em>.</p>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="x86asm">
+&nbsp;&nbsp;&nbsp;movzx cid, word ptr [obj + 15] ; load class id
+   call [GDT + cid * 8 + #(sid * 8)]
+                </code></pre>
+                <pre class="scheme"><code data-trim data-noescape>
+┌────────────────────────┐ ╱
+│ selectors are numbered ├
+│ in a way that tries to │
+│ minimize GDT size.     │
+└────────────────────────┘
+                    </code></pre>
+            </section>
+            <section>
+                <h2>Types you can trust</h2>
+                <h3>but also sometimes <mark>must check</mark></h3>
+            </section>
+            <section>
+                <h2><mark>Covariant generics</mark></h2>
+                <p><code>List&lt;Cat&gt;</code> is subtype of <code>List&lt;Animal&gt;</code></p>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="dart">
+List&lt;Animal&gt; animals = /* ... */;
+animals.add(Cat()); // needs covariant check
+                </code></pre>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="dart">
+List&lt;Animal&gt; animals = <mark>&lt;Animal&gt;</mark>[];
+animals.add(Cat()); // ok
+                </code></pre>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="dart">
+List&lt;Animal&gt; animals = <mark>&lt;Cat&gt;</mark>[];
+animals.add(Cat()); // ok
+                </code></pre>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="dart">
+List&lt;Animal&gt; animals = <mark>&lt;Dog&gt;</mark>[];
+animals.add(Cat()); // runtime error
+                </code></pre>
+            </section>
+            <section style="text-align: left;">
+                <h2>Type checks can be expensive</h2>
+                <p>&mdash; receivers are often <mark>dynamically invariant</mark></p>
+                <p>&mdash; it is faster to check invariance than type check value</p>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="dart">
+         ─── { is_invariant: ? }
+        ╱
+animals.add(Cat());
+                </code></pre>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="dart">
+         ─── { is_invariant: true }
+        ╱                       └─ can bypass
+animals.add(Cat());                type checks
+                </code></pre>
+            </section>
+            <section>
+                <h2>Type checks can be expensive</h2>
+                <p><code>x as T</code> plays larger role in Dart 2</p>
+            </section>
+            <section>
+                <h2>Caching and<br/><mark>code generation</mark></h2>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="cpp">
+class Type {
+
+};
+
+bool IsAssignableTo(Type t, Object x);
+
+// x is T
+IsAssignableTo(T, x);
+            </code></pre>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="cpp">
+class Type {
+  bool (*stub)(Object x);  // specialized stub
+};
+
+bool IsAssignableTo(Type t, Object x);
+
+// x is T
+T->stub(x);
+            </code></pre>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="console">
+                                 dynamic                static
+                    ──────────────────────────── ──────────
+                    2011     2013     2015         2018     2020
+                    ─────────────────────────────────────
+                    0.x       1.0  │               2.0│     2.12
+                 vm ───────JIT───── ──────────AOT──────────
+                                   │                  │
+                                Flutter              We are here
+                </code></pre>
+            </section>
+            <section>
+                <h2>Demand for smaller downloads size and memory footprint.</h2>
+            </section>
+            <section>
+                <h1>Diverging AOT from JIT</h1>
+            </section>
+            <section style="text-align: left; font-size: 1.5em;">
+                <ul class="dashed">
+                    <li>bare instructions</li>
+                    <li>GDT</li>
+                    <li>compressed stack maps</li>
+                    <li><mark>DWARF stack traces</mark></li>
+                </ul>
+            </section>
+            <section style="text-align: left;">
+                <h3>DWARF stack traces</h3>
+                <p>In this mode we generate debugging information in DWARF format,
+                rather than using our internal representation. <code>StackTrace.toString</code>
+                is changed to print raw PCs rather than function names. <mark>Opens doors for
+                dropping symbolic information and parts of program structure.</mark></p>
+            </section>
+            <section>
+                <h2>Demand for integration with native code.</h2>
+            </section>
+            <section>
+                <h1><code>dart:ffi</code></h1>
+            </section>
+            <section>
+                <pre class="scheme"><code data-trim data-noescape class="dart smaller">
+                    class Coordinate extends Struct {
+                        @Double() double latitude;
+                        @Double() double longitude;
+                    }
+                    // Pointer to a struct in native memory.
+                    Pointer&lt;Coordinate&gt; ptr = ...;
+                    ptr.ref.latitude = 1.0;  // Write through pointer.
+                    // There is also a way to map functions to Dart and
+                    // the other way around (though a bit verbose).
+                </code></pre>
+            </section>
+            <section style="text-align: left;">
+                <h3>Challenge of <code>dart:ffi</code></h3>
+                <p>Express low-level foreign interface concepts without
+                language changes because language design capacity is dedicated
+                to NNBD.</p>
+            </section>
+            <section>
+                <h2>Demand for low-overhead concurrency.</h2>
+            </section>
+            <section style="text-align: left;">
+                <h3>Dart Isolates</h3>
+                <p>Each isolate can be considered an independent VM instance,
+                with its own heap, a single mutator thread and a number of
+                auxiliarry worker threads. Isolates communicate with message
+                passing implemented on top of snapshots: message is serialized
+                on the sending side and deserialized on the receiving side.</p>
+            </section>
+            <section style="text-align: left;">
+                <h3>Dart Isolates: Problems</h3>
+                <ul class=dashed>
+                    <li>program structure is duplicated making isolates slow to spawn and memory hungry</li>
+                    <li>message passing requires copying</li>
+                </ul>
+            </section>
+            <section style="text-align: left;">
+                <h3>Dart <mark>Isolate Groups</mark> (new!)</h3>
+                <p>Isolates spawned from the same <em>program</em> are allowed to coexist in the same heap,
+                though can't directly interact with each other's user defined mutable state. This opens
+                possiblity to share program structure and makes them <em>lightweight</em>. Isolate can decide
+                to send a message (within the same group) and terminate itself (<code>sendAndExit</code>) which allows to bypass copying.</p>
+            </section>
+            <section>
+                <h2>Demand for faster<br/>language evolution.</h2>
+            </section>
+            <section>
+                <pre class="scheme">
+Dart 1       Dart VM (in C++)
+             ┌─────────────────────────┐
+          ┌─▶│ Parser ─▶ AST ─▶ ...  │
+          │  └─────────────────────────┘
+          │  dart2js (in Dart)
+╭────────╮  ┌─────────────────────────┐
+│  Dart  ──▶│ Parser ─▶ AST ─▶ ...  │
+│ Source │  └─────────────────────────┘
+╰────────╯│  dartanalyzer (in Dart)
+          │  ┌─────────────────────────┐
+          └─▶│ Parser ─▶ AST ─▶ ┌─────┐
+             └────────────────────│┌─────┐
+                                  └│     │
+                                   └─────┘
+                </pre>
+                        </section>
+
+                        <section>
+                <pre class="scheme">
+ Dart 2                              Dart VM
+                                     ┌──────┐
+                                  ┌─▶│ ...  │
+                                  │  └──────┘
+                                  │  dart2js
+ ╭────────╮   ┌────────┐   ╭─────╮  ┌──────┐
+ │  Dart  │──▶│ Parser │─▶│ AST ──▶│ ...  │
+ │ Source |   └────────┘   ╰─────╯  └──────┘
+ ╰────────╯   (in Dart)           ┊
+                                  ┊
+                </pre>
+                        </section>
+                        <section>
+                <h1>Learnings</h1>
+            </section>
+            <section>
+                <h2>Everything counts</h2>
+                <h3>at some point</h3>
+            </section>
+            <section>
+                <h2>It is all about the balance</h2>
+                <h3>specialized vs generic</h3>
+            </section>
+            <section>
+                <h2><em>specialized solutions</em></h2>
+                <h2><em>but generic foundations.</em></h2>
+            </section>
+        </div>
+        </div>
+
+        <script src="dist/reveal.js"></script>
+        <script src="plugin/notes/notes.js"></script>
+        <script src="plugin/markdown/markdown.js"></script>
+        <script src="plugin/highlight/highlight.js"></script>
+        <script>
+            // More info about initialization & config:
+            // - https://revealjs.com/initialization/
+            // - https://revealjs.com/config/
+            Reveal.initialize({
+                hash: true,
+                transition: 'none',
+
+                // Learn about plugins: https://revealjs.com/plugins/
+                plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+            });
+        </script>
+    </body>
 </html>

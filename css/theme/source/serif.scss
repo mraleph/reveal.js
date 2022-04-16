@@ -14,9 +14,9 @@
 
 
 // Override theme settings (see ../template/settings.scss)
-$mainFont: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+$mainFont: 'EB Garamond', 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
 $mainColor: #000;
-$headingFont: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+$headingFont: 'EB Garamond', 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
 $headingColor: #383D3D;
 $headingTextShadow: none;
 $headingTextTransform: none;
@@ -24,10 +24,39 @@ $backgroundColor: #F0F1EB;
 $linkColor: #51483D;
 $linkColorHover: lighten( $linkColor, 20% );
 $selectionBackgroundColor: #26351C;
+$codeFont: 'PragmataPro Mono', 'Victor Mono';
 
 .reveal a {
   line-height: 1.3em;
 }
+
+
+mark.no-background {
+  background-image: none;
+}
+
+.reveal .slides section .fragment.highlight-mark {
+	opacity: 1;
+  visibility: inherit;
+  transition: none;
+}
+
+mark, .attn, .reveal .slides section .fragment.highlight-mark.visible {
+  margin: 0 -0.4em;
+  padding: 0.1em 0.4em;
+  border-radius: 0.8em 0.3em;
+  background: transparent;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 225, 0, 0.1),
+    rgba(255, 225, 0, 0.7) 4%,
+    rgba(255, 225, 0, 0.3)
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  //font-style: italic;
+}
+
 
 // Change text colors against dark slide backgrounds
 @include dark-bg-text-color(#fff);
@@ -36,3 +65,15 @@ $selectionBackgroundColor: #26351C;
 // Theme template ------------------------------
 @import "../template/theme";
 // ---------------------------------------------
+
+pre.scheme { line-height: 1.1em !important; }
+
+ul.dashed {
+  list-style-type: none;
+}
+
+ul.dashed li:before {
+  content: '\2014';
+  position: absolute;
+  margin-left: -1.2em;
+}

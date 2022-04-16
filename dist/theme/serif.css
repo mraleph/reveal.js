@@ -7,6 +7,23 @@
 .reveal a {
   line-height: 1.3em; }
 
+mark.no-background {
+  background-image: none; }
+
+.reveal .slides section .fragment.highlight-mark {
+  opacity: 1;
+  visibility: inherit;
+  transition: none; }
+
+mark, .attn, .reveal .slides section .fragment.highlight-mark.visible {
+  margin: 0 -0.4em;
+  padding: 0.1em 0.4em;
+  border-radius: 0.8em 0.3em;
+  background: transparent;
+  background-image: linear-gradient(to right, rgba(255, 225, 0, 0.1), rgba(255, 225, 0, 0.7) 4%, rgba(255, 225, 0, 0.3));
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone; }
+
 section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
   color: #fff; }
 
@@ -15,12 +32,12 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
  *********************************************/
 :root {
   --background-color: #F0F1EB;
-  --main-font: Palatino Linotype, Book Antiqua, Palatino, FreeSerif, serif;
+  --main-font: EB Garamond, Palatino Linotype, Book Antiqua, Palatino, FreeSerif, serif;
   --main-font-size: 40px;
   --main-color: #000;
   --block-margin: 20px;
   --heading-margin: 0 0 20px 0;
-  --heading-font: Palatino Linotype, Book Antiqua, Palatino, FreeSerif, serif;
+  --heading-font: EB Garamond, Palatino Linotype, Book Antiqua, Palatino, FreeSerif, serif;
   --heading-color: #383D3D;
   --heading-line-height: 1.2;
   --heading-letter-spacing: normal;
@@ -32,7 +49,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   --heading2-size: 2.11em;
   --heading3-size: 1.55em;
   --heading4-size: 1em;
-  --code-font: monospace;
+  --code-font: PragmataPro Mono, Victor Mono;
   --link-color: #51483D;
   --link-color-hover: #8b7c69;
   --selection-background-color: #26351C;
@@ -43,7 +60,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   background-color: #F0F1EB; }
 
 .reveal {
-  font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
+  font-family: "EB Garamond", "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
   font-size: 40px;
   font-weight: normal;
   color: #000; }
@@ -74,7 +91,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #383D3D;
-  font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
+  font-family: "EB Garamond", "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
   font-weight: normal;
   line-height: 1.2;
   letter-spacing: normal;
@@ -179,24 +196,31 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 .reveal pre {
   display: block;
   position: relative;
-  width: 90%;
+  width: 110%;
   margin: 20px auto;
   text-align: left;
-  font-size: 0.55em;
-  font-family: monospace;
+  font-size: 1em;
+  font-family: "PragmataPro Mono", "Victor Mono";
   line-height: 1.2em;
-  word-wrap: break-word;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); }
+  word-wrap: break-word; }
+
+code.smaller {
+  font-size: 0.8em !important;
+  line-height: 1.2em; }
 
 .reveal code {
-  font-family: monospace;
-  text-transform: none; }
+  font-family: "PragmataPro Mono", "Victor Mono";
+  text-transform: none;
+  font-size: .9em; }
+
+.reveal pre code {
+  font-size: 1em; }
 
 .reveal pre code {
   display: block;
   padding: 5px;
   overflow: auto;
-  max-height: 400px;
+  max-height: 450px;
   word-wrap: normal; }
 
 .reveal table {
@@ -251,12 +275,14 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 .reveal a {
   color: #51483D;
   text-decoration: none;
-  transition: color .15s ease; }
+  transition: color .15s ease;
+  border-bottom: 1px dashed #51483D; }
 
 .reveal a:hover {
   color: #8b7c69;
   text-shadow: none;
-  border: none; }
+  border: none;
+  border-bottom: 1px dashed #8b7c69; }
 
 .reveal .roll span:after {
   color: #fff;
@@ -295,3 +321,14 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 @media print {
   .backgrounds {
     background-color: #F0F1EB; } }
+
+pre.scheme {
+  line-height: 1.1em !important; }
+
+ul.dashed {
+  list-style-type: none; }
+
+ul.dashed li:before {
+  content: '\2014';
+  position: absolute;
+  margin-left: -1.2em; }
